@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 
@@ -6,6 +6,7 @@ export default function AuthCallbackPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const isProcessing = useRef(false);
 
   useEffect(() => {
     const code = searchParams.get('code');
@@ -15,6 +16,12 @@ export default function AuthCallbackPage() {
       setError('Authorization code not found');
       return;
     }
+
+    // Prevent duplicate API calls (React StrictMode or re-renders)
+    if (isProcessing.current) {
+      return;
+    }
+    isProcessing.current = true;
 
     handleCallback(code, guildId);
   }, [searchParams]);

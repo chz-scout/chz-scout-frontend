@@ -10,7 +10,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route path="/api/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/tags" element={<TagsPage />} />
         </Routes>
       </AuthProvider>
