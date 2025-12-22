@@ -1,8 +1,7 @@
 export interface User {
-  id: number;
+  uuid: string;
   discordId: string;
-  username: string;
-  avatarUrl?: string;
+  nickname: string;
 }
 
 export interface TokenResponse {
@@ -24,5 +23,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: () => void;
+  addBot: () => void;
   logout: () => void;
+  refreshAuth: () => Promise<void>;
 }

@@ -38,13 +38,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const login = () => {
-    // Discord OAuth + Bot 초대 동시 처리
-    const scope = 'identify+email+bot';
-    const permissions = '2147600448'; // Send Messages + Embed Links + Use Slash Commands + more
+    // Discord OAuth 로그인만 (봇 초대 없이)
+    const scope = 'identify+email';
 
-    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${scope}&permissions=${permissions}`;
+    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${scope}`;
 
     window.location.href = authUrl;
+  };
+
+  const addBot = () => {
+    // Discord 봇 초대 (로그인 없이 봇만 추가)
+    const scope = 'bot';
+    const permissions = '2147600448'; // Send Messages + Embed Links + Use Slash Commands + more
+
+    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&permissions=${permissions}&scope=${scope}`;
+
+    window.open(authUrl, '_blank');
   };
 
   const logout = () => {
@@ -54,6 +63,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     window.location.href = '/';
   };
 
+  const refreshAuth = async () => {
+    await checkAuthStatus();
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -61,7 +74,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isAuthenticated: !!user,
         isLoading,
         login,
+        addBot,
         logout,
+        refreshAuth,
       }}
     >
       {children}

@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function AuthCallbackPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const isProcessing = useRef(false);
+  const { refreshAuth } = useAuth();
 
   useEffect(() => {
     const code = searchParams.get('code');
@@ -38,6 +40,7 @@ export default function AuthCallbackPage() {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
 
+      await refreshAuth();
       navigate('/', { replace: true });
     } catch (err) {
       console.error('OAuth callback failed:', err);

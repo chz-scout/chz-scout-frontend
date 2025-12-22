@@ -2,7 +2,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 export default function HomePage() {
-  const { user, isAuthenticated, login, logout, isLoading } = useAuth();
+  const { user, isAuthenticated, login, addBot, logout, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -20,6 +20,12 @@ export default function HomePage() {
           <nav>
             {isAuthenticated ? (
               <div className="flex items-center gap-4">
+                <button
+                  onClick={addBot}
+                  className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition-colors"
+                >
+                  Add Bot
+                </button>
                 <Link
                   to="/tags"
                   className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors"
@@ -50,7 +56,7 @@ export default function HomePage() {
         {isAuthenticated && user ? (
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">
-              Welcome, {user.username}!
+              Welcome, {user.nickname}!
             </h2>
             <p className="text-gray-400 mb-8">
               Manage your stream notification preferences
