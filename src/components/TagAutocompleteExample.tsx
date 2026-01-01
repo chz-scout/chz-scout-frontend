@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TagAutocomplete from './TagAutocomplete';
-import { TagType, TagAutocompleteResult } from '../types/tag';
+import type { TagAutocompleteResult } from '../types/tag';
 
 /**
  * Example component demonstrating TagAutocomplete usage
@@ -69,7 +69,7 @@ export default function TagAutocompleteExample() {
           <TagAutocomplete
             value={categorySearch}
             onChange={setCategorySearch}
-            tagType={TagType.CATEGORY}
+            tagType="CATEGORY"
             placeholder="Search category tags..."
           />
         </section>
@@ -83,7 +83,7 @@ export default function TagAutocompleteExample() {
           <TagAutocomplete
             value={customSearch}
             onChange={setCustomSearch}
-            tagType={TagType.CUSTOM}
+            tagType="CUSTOM"
             placeholder="Search custom tags..."
           />
         </section>
