@@ -30,7 +30,7 @@ export default function AuthCallbackPage() {
 
   const handleCallback = async (code: string, guildId: string | null) => {
     try {
-      const response = await api.post('/v1/auth/discord/callback', {
+      const response = await api.post('/api/v1/auth/discord/callback', {
         code,
         guildId,
       });
